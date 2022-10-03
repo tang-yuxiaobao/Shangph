@@ -8,6 +8,10 @@ import store from "./store";
 import TypeNav from "./components/TypeNav";
 // 注册全局组件(全局组件名字，哪个组件)
 Vue.component(TypeNav.name, TypeNav);
+// 引入mock数据
+import "@/mock/mockServe";
+// 引入swiper样式
+import 'swiper/css/swiper.css'
 
 new Vue({
   render: (h) => h(App),

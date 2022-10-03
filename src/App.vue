@@ -17,6 +17,10 @@ export default {
     myHeader,
     myFooter,
   },
+  mounted() {
+    // 通知Vuex发请求，获取数据，存储到仓库中
+    this.$store.dispatch("categoryList"); // 派发一个action，获取三级列表的数据
+  },
 };
 </script>
 

@@ -89,8 +89,6 @@ export default {
   },
   // 组件挂载完毕：向发出请求、展示数据
   mounted() {
-    // 通知Vuex发请求，获取数据，存储到仓库中
-    this.$store.dispatch("categoryList"); // 派发一个action
     // 组件挂在完毕，使show为false
     if (this.$route.path != "/home") {
       this.show = false;
@@ -132,10 +130,14 @@ export default {
         } else {
           query.category3Id = category3id;
         }
-        // 把query添加到location上
-        location.query = query;
-        // 路由跳转
-        this.$router.push(location);
+        // 判断：如果路由跳转的时候已经有params参数了，要一并传递过去
+        if (this.$route.params) {
+          location.params = this.$route.params;
+          // 把query添加到location上
+          location.query = query;
+          // 路由跳转
+          this.$router.push(location);
+        }
       }
     },
     // 鼠标移入的时候，展示商品分类列表
