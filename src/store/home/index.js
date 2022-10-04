@@ -1,7 +1,7 @@
 // home模块的小仓库
 
 // 引入api
-import { reqCategoryList, reqGetBannerList } from "../../api";
+import { reqCategoryList, reqGetBannerList, reqGetFloorList } from "../../api";
 
 const state = {
   // 应根据接口的返回值去初始化state中的数据
@@ -9,6 +9,7 @@ const state = {
   categoryList: [],
   // 轮播图数据
   bannerList: [],
+  floorList: [],
 };
 const mutations = {
   CATEGORYLIST(state, categoryList) {
@@ -18,6 +19,9 @@ const mutations = {
   },
   GETBANNERLIST(state, bannerList) {
     state.bannerList = bannerList;
+  },
+  GETFLOORLIST(state, floorList) {
+    state.floorList = floorList;
   },
 };
 const actions = {
@@ -36,7 +40,16 @@ const actions = {
       commit("GETBANNERLIST", result.data);
     }
   },
+  // 获取floor数据
+  async getFloorList({ commit }) {
+    let result = await reqGetFloorList();
+    if (result.code == 200) {
+      // 提交 mutation
+      commit("GETFLOORLIST", result.data);
+    }
+  },
 };
+// 计算属性
 const getters = {};
 
 export default {

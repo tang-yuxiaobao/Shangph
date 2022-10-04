@@ -4,14 +4,16 @@ import App from "./App.vue";
 import router from "./router/index";
 // 引入仓库
 import store from "./store";
+// 注册全局组件(全局组件名字，哪个组件)
 // 三级联动组件(全局)
 import TypeNav from "./components/TypeNav";
-// 注册全局组件(全局组件名字，哪个组件)
+import Carousel from "./components/Carousel";
 Vue.component(TypeNav.name, TypeNav);
+Vue.component(Carousel.name, Carousel);
 // 引入mock数据
 import "@/mock/mockServe";
 // 引入swiper样式
-import 'swiper/css/swiper.css'
+import "swiper/css/swiper.css";
 
 new Vue({
   render: (h) => h(App),

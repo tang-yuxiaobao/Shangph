@@ -11,3 +11,5 @@ export const reqCategoryList = () =>
 
 // 获取banner轮播图接口
 export const reqGetBannerList = () => mockRequests.get("/banner");
+// 获取floor数据
+export const reqGetFloorList = () => mockRequests.get("/floor");
