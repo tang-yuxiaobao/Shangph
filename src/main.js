@@ -8,8 +8,10 @@ import store from "./store";
 // 三级联动组件(全局)
 import TypeNav from "./components/TypeNav";
 import Carousel from "./components/Carousel";
+import Pagination from "./components/Pagination";
 Vue.component(TypeNav.name, TypeNav);
 Vue.component(Carousel.name, Carousel);
+Vue.component(Pagination.name, Pagination);
 // 引入mock数据
 import "@/mock/mockServe";
 // 引入swiper样式

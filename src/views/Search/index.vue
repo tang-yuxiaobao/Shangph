@@ -45,14 +45,27 @@
             <div class="navbar-inner filter">
               <!-- 排序结构 -->
               <ul class="sui-nav">
-                <li :class="{ active: isOne }">
-                  <a>综合<span v-show="isOne"></span></a>
+                <li :class="{ active: isOne }" @click="changeOrder('1')">
+                  <a
+                    >综合<span
+                      v-show="isOne"
+                      class="iconfont"
+                      :class="{
+                        'icon-caret-up': isAsc,
+                        'icon-caret-down': isDesc,
+                      }"
+                    ></span
+                  ></a>
                 </li>
-                <li :class="{ active: isTwo }">
+                <li :class="{ active: isTwo }" @click="changeOrder('2')">
                   <a
                     >价格<span
                       v-show="isTwo"
-                      class="iconfont icon-caret-up"
+                      class="iconfont"
+                      :class="{
+                        'icon-caret-up': isAsc,
+                        'icon-caret-down': isDesc,
+                      }"
                     ></span
                   ></a>
                 </li>
@@ -106,35 +119,7 @@
             </ul>
           </div>
           <!-- 分页器 -->
-          <div class="fr page">
-            <div class="sui-pagination clearfix">
-              <ul>
-                <li class="prev disabled">
-                  <a href="#">«上一页</a>
-                </li>
-                <li class="active">
-                  <a href="#">1</a>
-                </li>
-                <li>
-                  <a href="#">2</a>
-                </li>
-                <li>
-                  <a href="#">3</a>
-                </li>
-                <li>
-                  <a href="#">4</a>
-                </li>
-                <li>
-                  <a href="#">5</a>
-                </li>
-                <li class="dotted"><span>...</span></li>
-                <li class="next">
-                  <a href="#">下一页»</a>
-                </li>
-              </ul>
-              <div><span>共10页&nbsp;</span></div>
-            </div>
-          </div>
+          <Pagination />
         </div>
       </div>
     </div>
@@ -196,6 +181,14 @@ export default {
     },
     isTwo() {
       return this.searchParams.order.indexOf("2") != -1;
+    },
+    isAsc() {
+      // 包含asc，是升序
+      return this.searchParams.order.indexOf("asc") != -1;
+    },
+    isDesc() {
+      // 包含asc，是升序
+      return this.searchParams.order.indexOf("desc") != -1;
     },
   },
   watch: {
@@ -274,6 +267,29 @@ export default {
       // 整理参数：删除对应数组中元素
       this.searchParams.props.splice(index, 1);
       // 再次发请求
+      this.getData();
+    },
+    // 排序操作
+    changeOrder(flag) {
+      // falg（用户点击时传递进来的）:综合（1）价格（2）
+      // 最开始状态
+      let originOrder = this.searchParams.order;
+      // 综合1还是价格2
+      let originFlag = this.searchParams.order.split(":")[0];
+      // 升序asc还是降序desc
+      let originSort = this.searchParams.order.split(":")[1];
+      // 准备一个新order属性值
+      let newOrder = "";
+      // 确定点击的是综合
+      if (flag == originFlag) {
+        newOrder = `${originFlag}:${originSort == "desc" ? "asc" : "desc"}`;
+      } else {
+        // 点击的是价格，则默认降序
+        newOrder = `${flag}:${"desc"}`;
+      }
+      // 将新的order赋值于searchParams
+      this.searchParams.order = newOrder;
+      // 再发请求
       this.getData();
     },
   },
