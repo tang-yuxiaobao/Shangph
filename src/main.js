@@ -17,6 +17,11 @@ import "swiper/css/swiper.css";
 
 new Vue({
   render: (h) => h(App),
+  // 全局事件总线$bus配置
+  beforeCreate() {
+    // 这里的this是VM
+    Vue.prototype.$bus = this;
+  },
   // 注册路由
   router,
   // 注册仓库：组件实例上会多一个$store属性

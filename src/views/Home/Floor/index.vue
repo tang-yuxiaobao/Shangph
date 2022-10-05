@@ -29,7 +29,7 @@
             <!-- 轮播图 -->
             <div class="floorBanner">
               <!-- 给子组件传递数据（数据名：list） -->
-              <Carsouel :list="list.carouselList" />
+              <Carousel :list="list.carouselList" />
             </div>
             <div class="split">
               <span class="floor-x-line"></span>
