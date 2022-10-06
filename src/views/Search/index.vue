@@ -118,8 +118,14 @@
               </li>
             </ul>
           </div>
-          <!-- 分页器 -->
-          <Pagination />
+          <!-- 分页器：测试阶段（这里的数据后面会被替换） -->
+          <Pagination
+            :pageNo="searchParams.pageNo"
+            :pageSize="searchParams.pageSize"
+            :total="total"
+            :continues="5"
+            @getPageNo="getPageNo"
+          />
         </div>
       </div>
     </div>
@@ -128,7 +134,7 @@
 
 <script>
 import SearchSelector from "./SearchSelector/SearchSelector.vue";
-import { mapGetters } from "vuex";
+import { mapGetters, mapState } from "vuex";
 export default {
   name: "Search",
   components: {
@@ -190,6 +196,10 @@ export default {
       // 包含asc，是升序
       return this.searchParams.order.indexOf("desc") != -1;
     },
+    // 获取search模块一共多少个产品
+    ...mapState({
+      total: (state) => state.search.searchList.total,
+    }),
   },
   watch: {
     // 监听路由的变化(变化则再次发请求)
@@ -280,16 +290,23 @@ export default {
       let originSort = this.searchParams.order.split(":")[1];
       // 准备一个新order属性值
       let newOrder = "";
-      // 确定点击的是综合
       if (flag == originFlag) {
+        // 确定点击的是同一个按钮
         newOrder = `${originFlag}:${originSort == "desc" ? "asc" : "desc"}`;
       } else {
-        // 点击的是价格，则默认降序
+        // 点击的不是同一个按钮，则默认降序
         newOrder = `${flag}:${"desc"}`;
       }
       // 将新的order赋值于searchParams
       this.searchParams.order = newOrder;
       // 再发请求
+      this.getData();
+    },
+    // 自定义事件——获取当前第几页
+    getPageNo(pageNo) {
+      // 整理带给服务器的参数
+      this.searchParams.pageNo = pageNo;
+      // 发请求
       this.getData();
     },
   },
