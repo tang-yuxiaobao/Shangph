@@ -1,11 +1,8 @@
 // 配置路由的文件
 import Vue from "vue";
 import VueRouter from "vue-router";
-// 引入路由组件
-import Home from "@/views/Home";
-import Search from "@/views/Search";
-import Login from "@/views/Login";
-import Register from "@/views/Register";
+// 将路由配置封装为一个模块
+import routes from "./routes";
 
 // 使用插件
 Vue.use(VueRouter);
@@ -43,33 +40,10 @@ VueRouter.prototype.replace = function (location, resolve, reject) {
 
 // 配置路由
 export default new VueRouter({
-  routes: [
-    {
-      path: "/home",
-      component: Home,
-      // 用于判断footer组件是否展示
-      meta: { show: true },
-    },
-    {
-      name: "search",
-      path: "/search/:keyword?",
-      component: Search,
-      meta: { show: true },
-    },
-    {
-      path: "/login",
-      component: Login,
-      meta: { show: false },
-    },
-    {
-      path: "/register",
-      component: Register,
-      meta: { show: false },
-    },
-    {
-      // 重定向到首页
-      path: "*",
-      redirect: "/home",
-    },
-  ],
+  routes,
+  // 滚动行为
+  scrollBehavior(to, from, savePosition) {
+    // y代表滚动条在最上方
+    return { y: 0 };
+  },
 });

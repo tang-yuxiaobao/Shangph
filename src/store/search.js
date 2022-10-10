@@ -1,4 +1,4 @@
-import { reqGetSearchInfo } from "../../api";
+import { reqGetSearchInfo } from "../api";
 
 // search模块的小仓库
 const state = {

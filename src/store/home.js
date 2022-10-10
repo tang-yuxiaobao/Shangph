@@ -1,7 +1,7 @@
 // home模块的小仓库
 
 // 引入api
-import { reqCategoryList, reqGetBannerList, reqGetFloorList } from "../../api";
+import { reqCategoryList, reqGetBannerList, reqGetFloorList } from "../api";
 
 const state = {
   // 应根据接口的返回值去初始化state中的数据
