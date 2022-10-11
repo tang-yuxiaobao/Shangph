@@ -426,8 +426,14 @@ export default {
           skuId: this.$route.params.skuid,
           skuNum: this.skuNum,
         });
-        // 进行路由跳转(没有“/”)
-        this.$router.push({ name: "addcartsuccess" });
+        // 进行路由跳转(没有“/”)，需要将产品的信息带给下一级路由组件
+        // 一些简单的数据skuNum，通过query形式给路由组件传递过去
+        // 产品信息的数据【比较复杂:skuInfo】，通过会话存储【存储的是字符串】（不持久化,会话结束数据再消失)
+        sessionStorage.setItem("SKUINFO", JSON.stringify(this.skuInfo)); // 对象转为字符串
+        this.$router.push({
+          name: "addcartsuccess",
+          query: { skuNum: this.skuNum },
+        });
       } catch (error) {
         // 失败了怎么样：给用户提示
         alert(error.message);
